@@ -6,7 +6,20 @@ const PORT = process.env.PORT || 3001;
 console.log(PORT);
 const app = express();
 
+//connect DB
+mongoose.connect('mongodb://localhost:27017/BOOK-SEARCH', {useNewUrlParser:true});
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback () {
+  console.log("h");
+});
+
+exports.test = function(req,res) {
+  res.render('test');
+
 // Define middleware here
+
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // Serve up static assets (usually on heroku)
@@ -24,4 +37,5 @@ app.get("*", (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`🌎 ==> API server now on port ${PORT}!`);
-});
+})
+};
